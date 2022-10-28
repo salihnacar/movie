@@ -1,0 +1,5 @@
+django 
+django-crispy-forms
+whitenoise
+pillow
+django_template_maths

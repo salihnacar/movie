@@ -1,0 +1,279 @@
+{% extends 'base2.html' %}
+{% load static %}
+
+{% block content %}
+
+<section class="w3l-text-8 genre-single">
+    <div class="text-bg-image" style="background: url({{seri.image.url}})">
+    </div>
+    <div class="container py-5">
+        <div class="d-grid-1 py-lg-4 my-lg-2">
+            <div style="color:var(--theme-title)" class="text">
+                <h6 class="text-logo">Series</h6>
+                <h3 class="hny-title">{{seri}}</h3>
+                    <div class="genre-single-page mb-lg-2 mb-2">
+                        <div class="row ab-grids-sec mt-0">
+                            <div class="col-lg-12 gen-right-1">
+                                <div class="mb-3">
+                                    <p><strong>Type : 
+                                        {% for type in seri.type.all %}
+                                        <a href="{% url 'movies:type' type.slug %}" class="read-button ml-0 mt-3" style="
+                                        height: 30px;
+                                        padding: 8px;
+                                        margin-top: 0px;
+                                        line-height: 12px;
+                                        font-size:12px;
+                                        text-decoration: none;">{{type}}</a>
+                                        {% endfor %}
+                                    </strong></p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Rate : {{seri.rate}} <span style="text-transform: lowercase;">imdb</span></b> </p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Country : {{seri.country}}</b> </p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Language : {{seri.language}}</b> </p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Released : <span style="text-transform: capitalize;">{{movie.released|date:"d.F.Y"}}</span></b> </p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Season no : {{seri.season_count}}</b></p>
+                                </div>
+                                <div class="mb-3">
+                                    <p><b>Epsoide no : {{seri.epsoide_count}}</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="genre-single-page my-lg-2 my-2">
+                    <div class="row ab-grids-sec align-items-center">
+                        <div class="col-lg-12 gen-right">
+                            <img src="{{seri.image.url}}" width="100%" height="450px">
+                        </div>
+                    </div><hr>
+                </div>
+                <div class="genre-single-page">
+                    <div class="row ab-grids-sec align-items-center">
+                        <div class="col-lg-12" style="font-size:16px;">
+                        {{seri.description}}
+                        </div>
+                    </div><hr>
+                </div>
+                <div class="genre-single-page mb-lg-5 mb-4">
+                    <div class="row ab-grids-sec">
+                        <div class="col-lg-12 gen-right-1">
+                            <div class="mb-3">
+                                <p><b>Producer : <span style="text-transform: capitalize;">{{seri.producer}}</span></b> </p>
+                            </div>
+                            <div class="mb-3">
+                                <p><b>Director : <span style="text-transform: capitalize;">{{seri.director}}</span></b> </p>
+                            </div>
+                            <div class="mb-3">
+                                <p><b>Editor : <span style="text-transform: capitalize;"></span></b> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div><hr>
+                <div class="w3l-blog-single comments mt-5">
+                    <h3 class="post-content-title">The Cast Of Series</h3>
+                    
+                    {% for actor in seri.actors.all %}
+                    <div class="media mt-5">
+                        <div class="img-circle">
+                            <a href="{% url 'movies:actor' actor.slug %}"><img src="{{actor.image.url}}" class="mr-3 rounded-circle" alt="..."></a>
+                        </div>
+                        <div class="media-body">
+                            <a href="{% url 'movies:actor' actor.slug %}"><h5 class="mt-0">{{actor}}</h5></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div><hr>
+            </div>
+                
+            </div>
+        </div>
+        
+    </div>
+    
+    
+
+</section>
+
+<section class="w3l-grids">
+    <div class="grids-main py-4">
+        <div class="container py-lg-4">
+                <div class="headerhny-title">
+                    <h3 class="hny-title">All Seasons</h3>
+                </div>
+            <div class="owl-four owl-carousel owl-theme">
+                
+                {% for season in seasons %}
+                <div class="item vhny-grid">
+                    <div class="box16">
+                        <a href="{% url 'movies:season' season.slug %}">
+                            <figure>
+                                <img class="img-fluid" src="{{seri.image.url}}" alt="">
+            
+                            </figure>
+                            <div class="box-content">
+                                <h3 class="title">{{season}}</h3>
+                                <h4> <span class="post"><span class="fa fa-clock-o"> </span>
+                                    Epsoides: {{season.epsoide_count}}
+                                    </span>
+                                </h4>
+                            </div>
+                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+<script src="{% static 'assets/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+	$(document).ready(function () {
+		$('.owl-four').owlCarousel({
+			loop: true,
+			margin: 20,
+			nav: false,
+			responsiveClass: true,
+			autoplay: false,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 2,
+					nav: true
+				},
+				1000: {
+					items: 2,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+<script>
+	$(document).ready(function () {
+		$('.owl-two').owlCarousel({
+			loop: true,
+			margin: 40,
+			nav: false,
+			responsiveClass: true,
+			autoplay: true,
+			autoplayTimeout: 5000,
+			autoplaySpeed: 1000,
+			autoplayHoverPause: false,
+			responsive: {
+				0: {
+					items: 1,
+					nav: false
+				},
+				480: {
+					items: 2,
+					nav: true
+				},
+				667: {
+					items: 2,
+					margin: 20,
+					nav: true
+				},
+				1000: {
+					items: 3,
+					nav: true
+				}
+			}
+		})
+	})
+</script>
+
+{% endblock content %}
+
+<!--grids-sec1-->
+<section class="w3l-grids">
+    <div class="grids-main py-4">
+        <div class="container py-lg-4">
+            <div class="headerhny-title">
+                <h3 class="hny-title">Popular Series</h3>
+            </div>
+            <div class="owl-four owl-carousel owl-theme">
+                <div class="item vhny-grid">
+                    <div class="box16">
+                        <a href="#">
+                            <figure>
+                                <img class="img-fluid" src="{% static 'assets/images/banner1.jpg' %}" alt="">
+            
+                            </figure>
+                            <div class="box-content">
+                                <h3 class="title">Rocketman</h3>
+                                <h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+            
+                                    </span>
+            
+                                    <span class="post fa fa-heart text-right"></span>
+                                </h4>
+                            </div>
+                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="item vhny-grid">
+                    <div class="box16">
+                        <a href="#">
+                            <figure>
+                                <img class="img-fluid" src="{% static 'assets/images/banner3.jpg' %}" alt="">
+                            </figure>
+                            <div class="box-content">
+                                <h3 class="title">Doctor Sleep</h3>
+                                <h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+            
+                                    </span>
+            
+                                    <span class="post fa fa-heart text-right"></span>
+                                </h4>
+                            </div>
+                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="item vhny-grid">
+                    <div class="box16" >
+                        <a href="#">
+                            <figure>
+                                <img class="img-fluid" src="{% static 'assets/images/banner1.jpg' %}" alt="">
+            
+                            </figure>
+                            <div class="box-content">
+                                <h3 class="title">Rocketman</h3>
+                                <h4> <span class="post"><span class="fa fa-clock-o"> </span> 1 Hr 4min
+            
+                                    </span>
+            
+                                    <span class="post fa fa-heart text-right"></span>
+                                </h4>
+                            </div>
+                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--//grids-sec1-->
